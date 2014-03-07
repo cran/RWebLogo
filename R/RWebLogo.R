@@ -35,12 +35,11 @@
 
 .python.valid <- function(){
   ver = tryCatch({
-    system2('xpython', '-V', stderr=T, stdout=T)
+    system2('python', '-V', stderr=T, stdout=T)
   }, error = function(e) {
     ""
   })
-  if(!grepl('2.7', ver))
-    return(FALSE)
+  if(ver == "") return(FALSE)
   
   return(TRUE)
 }
@@ -161,6 +160,7 @@ plotlogo <- function(file){
 #' @param resolution Bitmap resolution in dots per inch (DPI). Low resolution bitmaps with DPI<300 are antialiased  (default: 300 DPI).
 #' @param scale.width Scale the visible stack width by the fraction of symbols in the column?  i.e. columns with many gaps of unknowns are narrow (default: TRUE).
 #' @export
+#' @import findpython
 #' @examples
 #' # Make a sequence logo using an external alignment file format 
 #' # In this example we'll use the EMBOSS alignment format or msf
@@ -205,8 +205,8 @@ weblogo = function(seqs, file.in,
                 ){
   
   
-  if(!.python.valid()){
-    writeLines('Please install and add Python 2.7 to your path')
+  if(!can_find_python_cmd(minimum_version='2.6')){
+    writeLines('Please install and add Python (>=2.6) to your path')
     return(1)
   }
   
