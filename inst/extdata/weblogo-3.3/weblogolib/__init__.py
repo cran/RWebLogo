@@ -88,6 +88,8 @@ the program 'pdf2svg'.
 
 """
 
+OMAR_USING = False
+
 import sys
 import copy
 import os
@@ -275,6 +277,8 @@ std_color_schemes = {"auto":            None,   # Depends on sequence type
                      "classic":         classic,
                      "hydrophobicity" : hydrophobicity,  
                      "chemistry" :      chemistry,
+                     "chemistry2" :      chemistry2,
+                     "chemistry3" :      chemistry3,
                      "charge" :         charge,
                      }#
 
@@ -301,7 +305,9 @@ std_units = {
 std_sizes = {
     "small" : 5.4 , 
     "medium" : 5.4*2,
-    "large"  : 5.4*3
+    "large"  : 5.4*3,
+    "xlarge" : 5.4*4,
+    "xxlarge": 5.4*5
 }
             
 std_alphabets = {
@@ -425,6 +431,10 @@ class LogoOptions(object) :
         self.yaxis_label = None
         self.yaxis_tic_interval = 1.
         self.yaxis_minor_tic_ratio = 5
+
+        if OMAR_USING:
+            self.yaxis_minor_tic_ratio = 1
+
         self.yaxis_scale = None
 
         self.show_xaxis = True
@@ -450,6 +460,7 @@ class LogoOptions(object) :
         self.resolution  = 96.     # Dots per inch
            
         self.default_color = Color.by_name("black")    
+
         self.color_scheme = None
         #self.show_color_key = False # NOT yet implemented
         
@@ -469,6 +480,13 @@ class LogoOptions(object) :
         self.fontsize = 10
         self.title_fontsize = 12
         self.number_fontsize = 8
+
+        if OMAR_USING:
+            self.small_fontsize = 8
+            self.fontsize = 12
+            self.title_fontsize = 12
+            self.number_fontsize = 11
+        
 
         #self.text_font    = "ArialMT"
         #self.logo_font    = "Arial-BoldMT"
@@ -651,7 +669,7 @@ class LogoFormat(LogoOptions) :
         if self.show_yaxis :
             self.line_margin_left = self.fontsize * 3.0
         else :
-            self.line_margin_left = 0
+            self.line_margin_left = self.fontsize * 1.0
 
         if self.show_ends :
             self.line_margin_right = self.fontsize *1.5 
@@ -926,6 +944,8 @@ def eps_formatter( logodata, format, fout) :
 
     # Create and output logo
     template = resource_string( __name__, 'template.eps', __file__)
+    if OMAR_USING:
+        template = resource_string( __name__, 'custom_template.eps', __file__)
     logo = Template(template).substitute(substitutions)
     print >>fout, logo
  

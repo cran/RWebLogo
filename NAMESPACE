@@ -1,7 +1,2 @@
-export(plotlogo)
 export(weblogo)
 import(findpython)
-importFrom(grImport,PostScriptTrace)
-importFrom(grImport,grid.picture)
-importFrom(grImport,readPicture)
-importFrom(grid,grid.newpage)

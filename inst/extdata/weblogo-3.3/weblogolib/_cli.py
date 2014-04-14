@@ -211,7 +211,9 @@ def _build_logoformat( logodata, opts) :
         "annotate",
         "stack_width",
         "stack_aspect_ratio",
-        "reverse_stacks"
+        "reverse_stacks", 
+        "rotate_numbers",
+        "tic_length",
         ]
   
     for k in direct_from_opts:
@@ -463,7 +465,8 @@ def _build_option_parser() :
         default= defaults.show_xaxis,
         metavar = "YES/NO",
         help="Display sequence numbers along x-axis? (default: %default)")
-                       
+     
+
     format_grp.add_option( "-x", "--xlabel",
         dest="xaxis_label",
         action="store",
@@ -633,6 +636,23 @@ def _build_option_parser() :
         metavar = "YES/NO",
         help="Output additional diagnostic information. (Default: %default)")
 
+
+    # Additional options by Omar Wagih
+    advanced_grp.add_option( "", "--rotate-numbers",
+        dest="rotate_numbers",
+        action="store",
+        type = "boolean",
+        default= False,
+        metavar = "YES/NO",
+        help="Rotate numbers on xaxis? (default: no)")
+
+    advanced_grp.add_option( "", "--tic-length",
+        dest="tic_length",
+        action="store",
+        type="float",
+        default= 5,
+        help="Length of tics (default: 5)",
+        metavar = "NUMBER")
 
     # ========================== Server options =========================   
     server_grp.add_option( "", "--serve",

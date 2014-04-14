@@ -23,10 +23,10 @@
            'H. sapiens', 'E. coli', 'S. cerevisiae', 'C. elegans', 'D. melanogaster', 'M. musculus', 'T. thermophilus')
 
 # Size of the plot
-.SIZE = c('small', 'medium', 'large')
+.SIZE = c('small', 'medium', 'large', 'xlarge', 'xxlarge')
 
 # Different supported color schemes 
-.COLOR_SCHEME = c('auto', 'base pairing', 'charge', 'chemistry', 'classic', 'hydrophobicity', 'monochrome')
+.COLOR_SCHEME = c('auto', 'base pairing', 'charge', 'chemistry','chemistry2', 'chemistry3', 'classic', 'hydrophobicity', 'monochrome')
 
 # Write lines using sprintf
 .writeLines = function(v, x, ...){
@@ -89,93 +89,6 @@
   }
 }
 
-
-# Make EPS more optimal, and useable by PostScriptTrace
-.ps2ps <- function (file.in, file.out) {
-  gsexe <- Sys.getenv("R_GSCMD")
-  if (.Platform$OS.type == "windows") {
-    if (!nzchar(gsexe)) 
-      gsexe <- Sys.getenv("GSC")
-    if (is.null(gsexe) || !nzchar(gsexe)) {
-      poss <- Sys.which(c("gswin64c.exe", "gswin32c.exe"))
-      poss <- poss[nzchar(poss)]
-      gsexe <- if (length(poss)) 
-        poss
-      else "gswin32c.exe"
-    }
-    else if (grepl(" ", gsexe, fixed = TRUE)) 
-      gsexe <- shortPathName(gsexe)
-    
-  }
-  else {
-    if (is.null(gsexe) || !nzchar(gsexe)) {
-      gsexe <- "gs"
-      rc <- system(paste(shQuote(gsexe), "-help > /dev/null"))
-      if (rc != 0) 
-        stop("sorry, 'gs' cannot be found")
-    }
-  }
-  
-  file.out = suppressWarnings( normalizePath(file.out) )
-  cmd <- paste(gsexe, " -q -sDEVICE=ps2write -sstdout=%stderr -sOutputFile=", 
-               file.out, " -dNOPAUSE -dBATCH -P- -dSAFER ", normalizePath(file.in), 
-               sep = "")
-  ret <- switch(.Platform$OS.type, unix = system(cmd), windows = system(cmd, invisible = TRUE))
-  if (ret != 0) stop(gettextf("status %d in running command '%s'", ret, cmd), domain = NA)
-  
-  return(cmd)
-}
-
-# plotlogo <- function(file){
-#   if(!file.exists(file)){
-#     writeLines(sprintf('File "%s" does not exist!', file))
-#     return(1)
-#   }
-#   data = readJPEG(file)
-#   plot.new()
-#   lim = par()$usr
-#   rasterImage(data, lim[1], lim[3], lim[2], lim[4])
-# }
-
-#' Display a sequence logo as an R plot
-#'
-#' This function will display a sequence logo of an already generated eps sequence logo. 
-#'
-#' @param file path to the eps formatted file of the sequence logo
-#' 
-#' 
-#' @importFrom grImport PostScriptTrace
-#' @importFrom grImport grid.picture
-#' @importFrom grImport readPicture
-#' @importFrom grid grid.newpage
-#' 
-#' @export
-#' 
-#' @examples
-#' # Get path to an example eps sequence logo
-#' fpath = system.file("extdata", "example_logo.eps", package="RWebLogo")
-#' # Plot it!
-#' plotlogo(fpath)
-plotlogo <- function(file){
-  if(!file.exists(file)){
-    writeLines(sprintf('File "%s" does not exist!', file))
-    return(1)
-  }
-  if(!grepl('.eps$', basename(file))){
-    writeLines(sprintf('The file "%s" must be eps format to plot. To save your logo as in eps format, set the "format" option to "eps" in the weblogo call', file))
-    return(1)
-  }
-  
-  filenew = tempfile(pattern = 'filenew')
-  newps = .ps2ps(file, filenew)
-  
-  outfile = tempfile(pattern = 'outfile')
-  PostScriptTrace(file = filenew, outfilename = outfile)
-  pic = readPicture(outfile)
-  grid.newpage()
-  grid.picture(pic)
-}
-
 #' Plot a sequence logo
 #'
 #' This function will plot a sequence logo given aligned sequences. For more details on the parameters, see the WebLogo user manual at \url{http://weblogo.threeplusone.com/manual.html}
@@ -184,7 +97,6 @@ plotlogo <- function(file){
 #' @param file.in A file containing your sequence alignment in one of the following formats: clustal, fasta, plain, msf, genbank, nbrf, nexus, phylip, stockholm, intelligenetics, table, array, transfac. This file is only to be provided if you are not inputting data with 'seqs'. To set your data format, see the \code{datatype} option.
 #' @param open Open the generated logo file? (default: TRUE).
 #' @param verbose Write status messages to the R console? (default: TRUE).
-#' @param plot Plot the resulting logo as an R plot? Note: in order for this to work, the format option must be set to \code{eps} (default: FALSE).
 #' @param return.cmd Logical indicating if RWebLogo should return the WebLogo command generated (default: FALSE).
 #' @param datatype Type of multiple sequence alignment or position weight matrix file: ('clustal', 'fasta','plain', 'msf', 'genbank', 'nbrf', 'nexus', 'phylip', 'stockholm', 'intelligenetics', 'table', 'array', 'transfac'). You usually don't need to specify this, as weblogo will try figure out the format of your file.
 #' @param file.out Output file. For example, /path/to/dir/mylogo.pdf. By default this is your working directory + RWebLogo. + selected \code{format}.
@@ -221,6 +133,8 @@ plotlogo <- function(file){
 #' @param box Draw boxes around symbols? (default: FALSE).
 #' @param resolution Bitmap resolution in dots per inch (DPI). Low resolution bitmaps with DPI<300 are antialiased  (default: 300 DPI).
 #' @param scale.width Scale the visible stack width by the fraction of symbols in the column?  i.e. columns with many gaps of unknowns are narrow (default: TRUE).
+#' @param rotate.numbers Rotate values of x-axis? (default: FALSE).
+#' @param hide.tics Hide tic marks? (default: FALSE).
 #' 
 #' @export
 #' 
@@ -240,15 +154,12 @@ plotlogo <- function(file){
 #' weblogo(seqs=aln, errorbars=FALSE, title='Yay, No error bars!', 
 #'         fineprint='RWebLogo 1.0', label='1a')
 #' # We can also change the format of the output like this
-#' weblogo(seqs=aln, format='png')
+#' weblogo(seqs=aln, format='png', resolution=500)
 #' # You can change the axis labels like this
 #' weblogo(seqs=aln, xlabel='My x-axis', ylabel='Awesome bits')
-#' # Lets try plot a web logo to the R graphics device
-#' weblogo(seqs=aln, plot=TRUE, open=FALSE)
 #' # You get the idea! See ?weblogo for more awesome options! 
-#' # See ?plotlogo for more information on plotting eps sequence logos to the R graphics device!
-weblogo = function(seqs, file.in,
-                open=TRUE, verbose=TRUE, plot=F, return.cmd=F,
+weblogo <- function(seqs, file.in,
+                open=TRUE, verbose=TRUE, return.cmd=F,
                 datatype='plain',
                 file.out,
                 format='pdf', # eps (default), png, png_print, pdf, jpeg, svg, logodata
@@ -266,14 +177,12 @@ weblogo = function(seqs, file.in,
                 reverse.stacks = TRUE, 
 
                 color.scheme = 'auto',
-                stack.width=10.8, aspect.ratio=5, box=FALSE, resolution=300, scale.width=TRUE
+                stack.width=10.8, aspect.ratio=5, box=FALSE, resolution=300, scale.width=TRUE,
+                
+                # New options
+                rotate.numbers = FALSE, hide.tics = FALSE
                 ){
   
-  
-  if(plot){
-    format = 'eps'
-    open = F
-  }
   
   if(!can_find_python_cmd(minimum_version='2.6', required_modules='numpy' )){
     writeLines('Please install and add Python (>=2.6) to your path')
@@ -469,6 +378,13 @@ weblogo = function(seqs, file.in,
   
   if(!missing(scale.width))
     z = .cmd.add(z, '--scale-width', scale.width, 'logical')
+
+  if(!missing(rotate.numbers))
+    z = .cmd.add(z, '--rotate-numbers', rotate.numbers, 'logical')
+
+  if(!missing(hide.tics)){
+    if(hide.tics) z = .cmd.add(z, '--tic-length', 0.01, 'numeric')
+  }
   
   command = paste(z, collapse=' ')
   rt = system(command)
@@ -485,12 +401,6 @@ weblogo = function(seqs, file.in,
     }else{
       warning('Non interactive system, cannot open plotted sequence logo.')
     }
-  }
-  
-  if(plot){
-    if(format != 'eps')
-      stop("Format must be set to 'eps' to plot!")
-    plotlogo(file.out)
   }
   
   if(return.cmd){

@@ -135,6 +135,24 @@ chemistry = ColorScheme([
   alphabet = seq.unambiguous_protein_alphabet
   )   
 
+# added by omar wagih
+chemistry2 = ColorScheme([
+  ColorGroup( "GSTYC",  "#058644",   "polar"),
+  ColorGroup( "NQ",      "#885c9c", "neutral"), 
+  ColorGroup( "KRH",     "#0b6fa4",   "basic"),
+  ColorGroup( "DE",      "#ca4c47",    "acidic"),
+  ColorGroup("PAWFLIMV", "#231f20",  "hydrophobic") ],
+  alphabet = seq.unambiguous_protein_alphabet
+  )   
+chemistry3 = ColorScheme([
+  ColorGroup( "GSTYC",  "#058644",   "polar"),
+  ColorGroup( "NQ",      "#720091", "neutral"), 
+  ColorGroup( "KRH",     "#0046C5",   "basic"),
+  ColorGroup( "DE",      "#C5003E",    "acidic"),
+  ColorGroup("PAWFLIMV", "#2E2E2E",  "hydrophobic") ],
+  alphabet = seq.unambiguous_protein_alphabet
+  )   
+
 charge = ColorScheme([
     ColorGroup("KRH", "blue", "Positive" ),
     ColorGroup( "DE", "red", "Negative") ],

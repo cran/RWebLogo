@@ -2,16 +2,16 @@
 \alias{weblogo}
 \title{Plot a sequence logo}
 \usage{
-weblogo(seqs, file.in, open = TRUE, verbose = TRUE, plot = F,
-  return.cmd = F, datatype = "plain", file.out, format = "pdf",
-  sequence.type = "protein", alphabet, units = "bits",
-  composition = "auto", weight, first.index, lower, upper,
-  ignore.lower.case = TRUE, reverse, complement, size = "large",
-  stacks.per.line = 40, title, label, show.xaxis = TRUE, xlabel, annotate,
-  yaxis, show.yaxis = TRUE, ylabel, show.ends = FALSE, fineprint = "",
-  ticmarks = 1, errorbars = FALSE, reverse.stacks = TRUE,
-  color.scheme = "auto", stack.width = 10.8, aspect.ratio = 5,
-  box = FALSE, resolution = 300, scale.width = TRUE)
+weblogo(seqs, file.in, open = TRUE, verbose = TRUE, return.cmd = F,
+  datatype = "plain", file.out, format = "pdf", sequence.type = "protein",
+  alphabet, units = "bits", composition = "auto", weight, first.index,
+  lower, upper, ignore.lower.case = TRUE, reverse, complement,
+  size = "large", stacks.per.line = 40, title, label, show.xaxis = TRUE,
+  xlabel, annotate, yaxis, show.yaxis = TRUE, ylabel, show.ends = FALSE,
+  fineprint = "", ticmarks = 1, errorbars = FALSE,
+  reverse.stacks = TRUE, color.scheme = "auto", stack.width = 10.8,
+  aspect.ratio = 5, box = FALSE, resolution = 300, scale.width = TRUE,
+  rotate.numbers = FALSE, hide.tics = FALSE)
 }
 \arguments{
   \item{seqs}{Aligned sequences as an R character vector.
@@ -32,10 +32,6 @@ weblogo(seqs, file.in, open = TRUE, verbose = TRUE, plot = F,
 
   \item{verbose}{Write status messages to the R console?
   (default: TRUE).}
-
-  \item{plot}{Plot the resulting logo as an R plot? Note:
-  in order for this to work, the format option must be set
-  to \code{eps} (default: FALSE).}
 
   \item{return.cmd}{Logical indicating if RWebLogo should
   return the WebLogo command generated (default: FALSE).}
@@ -157,6 +153,11 @@ weblogo(seqs, file.in, open = TRUE, verbose = TRUE, plot = F,
   \item{scale.width}{Scale the visible stack width by the
   fraction of symbols in the column?  i.e. columns with
   many gaps of unknowns are narrow (default: TRUE).}
+
+  \item{rotate.numbers}{Rotate values of x-axis? (default:
+  FALSE).}
+
+  \item{hide.tics}{Hide tic marks? (default: FALSE).}
 }
 \description{
 This function will plot a sequence logo given aligned
@@ -178,12 +179,9 @@ weblogo(seqs=aln)
 weblogo(seqs=aln, errorbars=FALSE, title='Yay, No error bars!',
         fineprint='RWebLogo 1.0', label='1a')
 # We can also change the format of the output like this
-weblogo(seqs=aln, format='png')
+weblogo(seqs=aln, format='png', resolution=500)
 # You can change the axis labels like this
 weblogo(seqs=aln, xlabel='My x-axis', ylabel='Awesome bits')
-# Lets try plot a web logo to the R graphics device
-weblogo(seqs=aln, plot=TRUE, open=FALSE)
 # You get the idea! See ?weblogo for more awesome options!
-# See ?plotlogo for more information on plotting eps sequence logos to the R graphics device!
 }
 
