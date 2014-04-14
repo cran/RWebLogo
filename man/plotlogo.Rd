@@ -5,15 +5,16 @@
 plotlogo(file)
 }
 \arguments{
-  \item{file}{path to the jpeg image of the sequence logo}
+  \item{file}{path to the eps formatted file of the
+  sequence logo}
 }
 \description{
 This function will display a sequence logo of an already
-generated jpeg sequence logo.
+generated eps sequence logo.
 }
 \examples{
-# Get path to an example jpeg sequence logo
-fpath = system.file("extdata", "example_logo.jpeg", package="RWebLogo")
+# Get path to an example eps sequence logo
+fpath = system.file("extdata", "example_logo.eps", package="RWebLogo")
 # Plot it!
 plotlogo(fpath)
 }

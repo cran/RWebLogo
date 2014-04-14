@@ -35,7 +35,7 @@ weblogo(seqs, file.in, open = TRUE, verbose = TRUE, plot = F,
 
   \item{plot}{Plot the resulting logo as an R plot? Note:
   in order for this to work, the format option must be set
-  to \code{jpeg} (default: FALSE).}
+  to \code{eps} (default: FALSE).}
 
   \item{return.cmd}{Logical indicating if RWebLogo should
   return the WebLogo command generated (default: FALSE).}
@@ -182,8 +182,8 @@ weblogo(seqs=aln, format='png')
 # You can change the axis labels like this
 weblogo(seqs=aln, xlabel='My x-axis', ylabel='Awesome bits')
 # Lets try plot a web logo to the R graphics device
-weblogo(seqs=aln, plot=TRUE, open=FALSE, format='jpeg', resolution=600)
+weblogo(seqs=aln, plot=TRUE, open=FALSE)
 # You get the idea! See ?weblogo for more awesome options!
-# See ?plotlogo for more information on plotting jpeg sequence logos to the R graphics device!
+# See ?plotlogo for more information on plotting eps sequence logos to the R graphics device!
 }
 

@@ -1,11 +1,14 @@
 27233e1f85f0fd89c42ce16da0c1f206 *CHANGES
-215c917ca473f9109d95d1c2028d0550 *DESCRIPTION
+47b05cd84d77ea94dbe1e8dda1444c25 *DESCRIPTION
 62db13e9d74ad062aed5308b4d2b13b0 *LICENSE
-c60bae9fbd1033de9be73c1e7890da84 *NAMESPACE
-61b9f2b0409f8b22beb620b9c254f66b *R/RWebLogo.R
+e55934ff4f356bb662bb484d32ef302c *NAMESPACE
+62728942bf12da8a19dff3101d0b115b *R/RWebLogo.R
 d41d8cd98f00b204e9800998ecf8427e *README.md
-d91e954dcbd12eaa0c096b7eb1d9b05b *build/BUILD.R
+7dadfae064f3348d4a34f1d031c5f6f3 *build/BUILD.R
+eaae46234edf28bba178bb8b0898b8fb *build/logo.pdf
+ca923c3a8fcf37b062eb05d4604e4e66 *build/logo.png
 2512532dc2f8a5452e8a592fd6834149 *inst/extdata/example_data.msf
+4c55f72ad9d0f74ea4df9179accb538c *inst/extdata/example_logo.eps
 78ef78352e190e12cc7f22a577c10bb7 *inst/extdata/example_logo.jpeg
 5cb30d3ef96e98fa370c39b2aa3feff4 *inst/extdata/weblogo-3.3/LICENSE.txt
 a50116d439f5abb16f9188ef54a11bcc *inst/extdata/weblogo-3.3/MANIFEST.in
@@ -122,8 +125,8 @@ eb9c881f56f6a7434791cc4959518534 *inst/extdata/weblogo-3.3/test_weblogo/data/Rv3
 2512532dc2f8a5452e8a592fd6834149 *inst/extdata/weblogo-3.3/test_weblogo/data/cox2.msf
 88429f42f0962c3685176aa7861d752a *inst/extdata/weblogo-3.3/transformseq
 d45c65217c3f00bf7098b318a30c9e52 *inst/extdata/weblogo-3.3/weblogo
-d32547087e740b6d98b0d5c8448521e0 *inst/extdata/weblogo-3.3/weblogolib/__init__.py
-3bd313014db5c2a12442c229f7787eed *inst/extdata/weblogo-3.3/weblogolib/__init__.pyc
+2952006d2c48c1e3a4da78eb4a806a00 *inst/extdata/weblogo-3.3/weblogolib/__init__.py
+ac97af17a0d231b4d343773f57058f09 *inst/extdata/weblogo-3.3/weblogolib/__init__.pyc
 12e42306c6bf63ed2f7caeb206a9caf5 *inst/extdata/weblogo-3.3/weblogolib/__init__OLD.py
 5bae9539c7db258c619698dacaec26ba *inst/extdata/weblogo-3.3/weblogolib/_cgi.py
 f692f7cd3f5effac822b5049c9bb9fa6 *inst/extdata/weblogo-3.3/weblogolib/_cli.py
@@ -165,5 +168,5 @@ fc3aa93608c33fa807b4b9a6ab179b93 *inst/extdata/weblogo-3.3/weblogolib/htdocs/web
 b4de78da9c4435a8e61bf03a52e9e4d7 *inst/extdata/weblogo-3.3/weblogolib/logomath.py
 bc333a2e93ae7331a96e29d74c69d1db *inst/extdata/weblogo-3.3/weblogolib/logomath.pyc
 865901d1d0bd989e3f56ce548305deec *inst/extdata/weblogo-3.3/weblogolib/template.eps
-f30ab7375bd7faf6dacd0ec59a58b269 *man/plotlogo.Rd
-2d755e25ab41c4432bdf952f50b3f943 *man/weblogo.Rd
+62d635d3ff822786f8bc5951d0fddd91 *man/plotlogo.Rd
+48ec204eef25e74e7cb9798a05d5e074 *man/weblogo.Rd

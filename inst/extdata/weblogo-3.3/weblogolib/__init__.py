@@ -216,7 +216,6 @@ class GhostscriptAPI(object) :
         args = [self.command, 
             "-sDEVICE=%s" % device, 
             #"-dPDFSETTINGS=/printer",
-            "-dPDFSETTINGS=/screen",
             #"-q",   # Quite: Do not dump messages to stdout.
             "-sstdout=%stderr", # Redirect messages and errors to stderr
             "-sOutputFile=-", # Stdout
@@ -224,7 +223,10 @@ class GhostscriptAPI(object) :
             "-dDEVICEHEIGHTPOINTS=%s" % str(height),  
             "-dSAFER",  # For added security
             "-dNOPAUSE",]
-            
+        
+        if device == 'eps' :
+            args.append("-dEmbedAllFonts=true")
+
         if device != 'pdf' :
             args.append("-r%s" % str(resolution) ) 
             if resolution < 300 : # Antialias if resolution is Less than 300 DPI
@@ -468,9 +470,24 @@ class LogoOptions(object) :
         self.title_fontsize = 12
         self.number_fontsize = 8
 
-        self.text_font    = "ArialMT"
-        self.logo_font    = "Arial-BoldMT"
-        self.title_font   = "ArialMT"
+        #self.text_font    = "ArialMT"
+        #self.logo_font    = "Arial-BoldMT"
+        #self.title_font   = "ArialMT"
+
+        #self.text_font    = "Helvetica"
+        #self.logo_font    = "Helvetica-Bold"
+        #self.title_font   = "Helvetica"
+
+
+        from sys import platform as _platform
+        if _platform == "linux" or _platform == "linux2" or _platform == "darwin":
+            self.text_font    = "Helvetica"
+            self.logo_font    = "Helvetica-Bold"
+            self.title_font   = "Helvetica"
+        else:
+            self.text_font    = "ArialMT"
+            self.logo_font    = "Arial-BoldMT"
+            self.title_font   = "ArialMT"
 
         self.first_index = 1        
         self.logo_start = None      
